@@ -1,9 +1,13 @@
 
 export default function DashboardLayout({ children }: {children: React.ReactNode}) {
   return (
-    <div className="flex flex-col min-h-screen mx-auto max-w-2xl px-4 pt-8 pb-16">
-      <div className="flex-grow">
-        <main className="my-0 py-16">{children}</main>
+    <div className="flex h-full">
+      <div className="sidebar">
+
+      </div>
+      <div className="">
+        <p>This is the dashboard</p>
+        <main className="">{children}</main>
       </div>
     </div>
   );

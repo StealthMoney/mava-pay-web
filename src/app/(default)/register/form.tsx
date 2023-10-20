@@ -1,6 +1,11 @@
 "use client";
 
-import React, { useRef } from "react";
+import Link from "next/link";
+import React, { useRef, useState } from "react";
+import { AccountType } from "../../../../types";
+import { AccountTypes } from "@/config/default";
+import { redirect } from "next/navigation";
+
 type RegisterFormProps = {
   action: (x: FormData) => Promise<{ error?: string; success?: boolean }>;
 };
@@ -8,13 +13,18 @@ type RegisterFormProps = {
 const RegisterForm = ({ action }: RegisterFormProps) => {
   // const [password, setPassword] = React.useState("");
   // const [confirmPassword, setConfirmPassword] = React.useState("");
-  const [passwordsMatch, setPasswordsMatch] = React.useState(false);
-  const [email, setEmail] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState("");
+  const [passwordsMatch, setPasswordsMatch] = useState(false);
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [phone, setPhone] = useState("");
+  const [businessName, setBusinessName] = useState("");
+  const [accountType, setAccountType] = useState<AccountType>(
+    AccountTypes.INDIVIDUAL
+  );
 
-  const passwordRef = useRef<HTMLInputElement>(null)
-  const confirmPasswordRef = useRef<HTMLInputElement>(null)
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const confirmPasswordRef = useRef<HTMLInputElement>(null);
 
   const validateData = () => {
     if (error) {
@@ -32,10 +42,7 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
     return true;
   };
 
-  const isButtonDisabled =
-    loading ||
-    error !== "" ||
-    !passwordsMatch;
+  const isButtonDisabled = loading || error !== "" || !passwordsMatch;
 
   const formAction = async (formData: FormData) => {
     const isValid = validateData();
@@ -49,20 +56,16 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
       setError(res.error);
       return;
     }
-    // setError("");
-    // setEmail("");
-    // setPassword("");
-    // setConfirmPassword("");
-    // redirect("/account/activate");
+    redirect("/login");
   };
 
   const confirmSamePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const passwordValue = passwordRef.current?.value
-    const confirmPasswordValue = confirmPasswordRef.current?.value
+    const passwordValue = passwordRef.current?.value;
+    const confirmPasswordValue = confirmPasswordRef.current?.value;
     if (confirmPasswordValue && passwordValue) {
-      setPasswordsMatch(passwordValue === confirmPasswordValue)
+      setPasswordsMatch(passwordValue === confirmPasswordValue);
     }
-  }
+  };
 
   React.useEffect(() => {
     if (error === "") {
@@ -73,16 +76,22 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
     }, 3000);
   }, [error]);
 
+  const handleCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAccountType(event.target.value as AccountType);
+  };
+
   // React.useEffect(() => {
   //   setPasswordsMatch(password === confirmPassword);
   // }, [password, confirmPassword]);
   return (
-    <div className="grid w-full mt-[10vh] place-items-center">
+    <div className="flex justify-center w-full py-[10px] md:py-[30px]">
       <form
         action={formAction}
         className="flex flex-col gap-6 md:gap-10 w-[200px] md:w-[396px]"
       >
-        <p className="text-center text-xl md:text-3xl font-bold text-custom-gray-100">Create Account</p>
+        <p className="text-center text-xl md:text-3xl font-bold text-custom-gray-800">
+          Create Account
+        </p>
         {error ? (
           <div
             className={`bg-none ${
@@ -105,6 +114,13 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
           />
           <input
             className="border border-gray-300 rounded-lg px-5 py-5 text-[14px] text-black"
+            type="tel"
+            name="phone"
+            required
+            placeholder="Phone"
+          />
+          <input
+            className="border border-gray-300 rounded-lg px-5 py-5 text-[14px] text-black"
             type="email"
             name="email"
             required
@@ -112,6 +128,46 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
             placeholder="Email"
             // onChange={(event) => setEmail(event.target.value)}
           />
+          <fieldset className="flex gap-8">
+            <label
+              htmlFor="accountTypeIndividual"
+              className="group"
+              data-checked={accountType === AccountTypes.INDIVIDUAL || null}
+            >
+              <input
+                id="accountTypeIndividual"
+                type="radio"
+                name="accountType"
+                value={AccountTypes.INDIVIDUAL}
+                checked={accountType == AccountTypes.INDIVIDUAL}
+                onChange={handleCheck}
+                // className="checked:text-brand-primary"
+              />
+              <span className="ml-4 capitalize group-data-[checked]:text-brand-primary">
+                {AccountTypes.INDIVIDUAL}
+              </span>
+            </label>
+            <label
+              htmlFor="accountTypeBusiness"
+              className="group"
+              data-checked={accountType === AccountTypes.BUSINESS || null}
+            >
+              <input
+                id="accountTypeBusiness"
+                type="radio"
+                name="accountType"
+                value={AccountTypes.BUSINESS}
+                checked={accountType == AccountTypes.BUSINESS}
+                onChange={handleCheck}
+              />
+              <span className="ml-4 capitalize group-data-[checked]:text-brand-primary">
+                {AccountTypes.BUSINESS}
+              </span>
+            </label>
+          </fieldset>
+          {accountType === AccountTypes.BUSINESS ? (
+            <BusinessRegistration />
+          ) : null}
           <input
             ref={passwordRef}
             className="border border-gray-300 rounded-lg px-5 py-5 text-[14px] text-black"
@@ -136,10 +192,37 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
           />
         </div>
 
-        <input type="submit" name="submit" value="Create Account" className="bg-brand-primary py-3 md:py-5 font-bold text-base text-white rounded-lg tracking-wide " />
+        <input
+          type="submit"
+          name="submit"
+          value="Create Account"
+          className="bg-brand-primary py-3 md:py-5 font-bold text-base text-white rounded-lg tracking-wide "
+        />
+        <p className="text-center text-custom-gray-400">
+          Already have an account?{" "}
+          <Link href="/login">
+            <span className="text-brand-primary">Login</span>
+          </Link>
+        </p>
       </form>
     </div>
   );
 };
 
 export default RegisterForm;
+
+export const BusinessRegistration = () => {
+  return (
+    <>
+      <input
+        className="border border-gray-300 rounded-lg px-5 py-5 text-[14px] text-black"
+        type="text"
+        name="businessName"
+        required
+        // value={email}
+        placeholder="Business Name"
+        // onChange={(event) => setEmail(event.target.value)}
+      />
+    </>
+  );
+};

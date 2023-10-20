@@ -4,6 +4,9 @@ import { JWT } from "next-auth/jwt"
 import CredentialsProvider from "next-auth/providers/credentials"
 
 import endpoints from "@/config/endpoints"
+import axiosInstance from "@/services/axios"
+import { API_BASE_URL } from "@/config/process"
+import { DecodedJwt } from "@/types/jwt"
 // import { DecodedJwt } from "@/types/jwt"
 
 export const authOptions: NextAuthOptions = {
@@ -23,17 +26,23 @@ export const authOptions: NextAuthOptions = {
                 }
             },
             async authorize(credentials, req) {
+                const body = {
+                    email: credentials?.email,
+                    password: credentials?.password
+                }
                 const authEndpoint = endpoints.AUTH.LOGIN()
-                const res = await fetch(authEndpoint, {
+
+                const res = await fetch(API_BASE_URL+authEndpoint, {
                     method: "POST",
                     body: JSON.stringify({
-                        username: credentials?.email,
+                        email: credentials?.email,
                         password: credentials?.password
                     }),
                     headers: { "Content-Type": "application/json" }
                 })
 
-                const user = await res.json()
+                const data = await res.json()
+                const user = data.data
                 if (res.ok && user) {
                     return user
                 } else {
@@ -43,44 +52,41 @@ export const authOptions: NextAuthOptions = {
         })
     ],
     pages: {
-        signIn: "/account/login",
-        signOut: "/account/logout"
+        signIn: "/login",
+        signOut: "/logout"
     },
     session: {
         // maxAge: 60 * 15 // 15 minutes
         strategy: "jwt"
     },
-    // callbacks: {
-    //     async signIn({ user }) {
-    //         if (user && user?.id_token) {
-    //             return true
-    //         } else {
-    //             return false
-    //         }
-    //     },
+    callbacks: {
+        async signIn({ user }) {
+            if (user && user?.token) {
+                return true
+            } else {
+                return false
+            }
+        },
 
-    //     async jwt({ token, user }) {
-    //         if (user && user?.id_token) {
-    //             token.id_token = user.id_token
-    //         }
-    //         return token
-    //     },
+        async jwt({ token, user }) {
+            console.log({token, user})
+            if (user && user.token) {
+                token.id_token = user.token
+            }
+            return token
+        },
 
-    //     async session({ session, token }: { session: Session; token: JWT }) {
-    //         session.accessToken = undefined
-    //         if (token.id_token) {
-    //             const decoded: DecodedJwt = jwt_decode(token.id_token)
-    //             session.accessToken = token.id_token
-    //             if (decoded.sub.includes("@")) {
-    //                 token.email = decoded.sub
-    //                 session.user.email = decoded.sub
-    //             } else {
-    //                 token.name = decoded.sub
-    //                 session.user.name = decoded.sub
-    //             }
-    //             session.user.role = decoded.auth
-    //         }
-    //         return session
-    //     }
-    // }
+        async session({ session, token }: { session: Session; token: JWT }) {
+            session.accessToken = undefined
+            if (token.id_token) {
+                const decoded: DecodedJwt = jwt_decode(token.id_token)
+                console.log({decoded})
+                session.accessToken = token.id_token
+                session.user.name = decoded.name
+                session.user.type = decoded.type
+                session.user.id = decoded.sub
+            }
+            return session
+        }
+    }
 }
