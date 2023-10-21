@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "./process";
 
 const USER = {
-  GET_BY_ID: (id: number) => `user/${id}`,
+  GET_USER: () => `user`,
 };
 
 const AUTH = {
@@ -14,11 +14,15 @@ const AUTH = {
 const PRICE = {
   GET_PRICE: (ticker: string) => `price?currency=${ticker}`
 }
+const WEBHOOK = {
+  UPDATE_WEBHOOK: () => `webhook/register`
+}
 
 const endpoints = {
   USER,
   AUTH,
-  PRICE
+  PRICE,
+  WEBHOOK
 }
 
 export default endpoints;

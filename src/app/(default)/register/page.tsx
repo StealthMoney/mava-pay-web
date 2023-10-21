@@ -8,7 +8,6 @@ const registerUser = async (formData: FormData) => {
   "use server"
   const { AUTH } = endpoints
   let url = AUTH.REGISTER_INDIVIDUAL()
-  console.log({url})
   const name = formData.get("name")
   const email = formData.get("email")
   const phone = formData.get("phone")

@@ -69,7 +69,6 @@ export const authOptions: NextAuthOptions = {
         },
 
         async jwt({ token, user }) {
-            console.log({token, user})
             if (user && user.token) {
                 token.id_token = user.token
             }
@@ -80,7 +79,6 @@ export const authOptions: NextAuthOptions = {
             session.accessToken = undefined
             if (token.id_token) {
                 const decoded: DecodedJwt = jwt_decode(token.id_token)
-                console.log({decoded})
                 session.accessToken = token.id_token
                 session.user.name = decoded.name
                 session.user.type = decoded.type
