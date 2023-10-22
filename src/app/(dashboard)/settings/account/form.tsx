@@ -24,7 +24,7 @@ type AccountFormProps = {
 };
 
 const AccountForm = ({ dbData, saveForm }: AccountFormProps) => {
-  const pathname = usePathname()
+  const pathname = usePathname();
   const toast = useToast();
   const [error, setError] = useState({
     name: "",
@@ -44,9 +44,9 @@ const AccountForm = ({ dbData, saveForm }: AccountFormProps) => {
 
   const validateForm = async (formData: FormData) => {
     // add validation here
-    setLoading(true)
+    setLoading(true);
     const res = await saveForm(formData);
-    setLoading(false)
+    setLoading(false);
     if (res.success) {
       toast({
         position: "top",
