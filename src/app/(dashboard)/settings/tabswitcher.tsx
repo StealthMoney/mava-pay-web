@@ -16,6 +16,7 @@ const tabLinks = [
   { name: "Account Settings", path: "account" },
   // { name: "Security", path: "security" },
   { name: "Developer", path: "developer" },
+  { name: "Wallet", path: "wallet" },
 ];
 
 const TabSwitcher = () => {
