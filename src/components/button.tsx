@@ -11,7 +11,7 @@ export const Button = ({
 }) => {
   return (
     <button
-      className={`bg-[${color}] w-full py-4 text-white rounded-lg font-bold text-base`}
+      className={`bg-brand-primary w-full py-4 text-white rounded-lg font-bold text-base`}
       disabled={isLoading}
     >
       {isLoading ? (
