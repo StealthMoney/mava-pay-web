@@ -30,9 +30,12 @@ const DashboardPage = async () => {
 export default DashboardPage;
 
 const CardsSection = ({ wallets }: { wallets: Wallet[] }) => {
-  const btcWallet = wallets.find(data => data.currency === "BTC")?.balance ?? 0
-  const ngnWallet = wallets.find(data => data.currency === "NGN")?.balance ?? 0
-  const numberFormat = (number: number, symbol: string) => `${new Intl.NumberFormat("en-NG").format(number)} ${symbol}`
+  const btcWallet =
+    wallets.find((data) => data.currency === "BTC")?.balance ?? 0;
+  const ngnWallet =
+    wallets.find((data) => data.currency === "NGN")?.balance ?? 0;
+  const numberFormat = (number: number, symbol: string) =>
+    `${new Intl.NumberFormat("en-NG").format(number)} ${symbol}`;
   return (
     <div className="grid grid-cols-12 gap-6 w-full">
       <SmallCard
@@ -55,7 +58,9 @@ const TableSection = ({ children }: { children: React.ReactNode }) => {
   return (
     <section className="w-full h-full">
       <div className="flex justify-between">
-        <p className="text-lg font-medium text-custom-gray-800">Recent Transactions</p>
+        <p className="text-lg font-medium text-custom-gray-800">
+          Recent Transactions
+        </p>
         <Link href="./transactions">
           <span className="text-brand-primary font-semibold text-sm hover:underline ml-auto">
             See all
