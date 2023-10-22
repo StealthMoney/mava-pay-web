@@ -29,7 +29,7 @@ const DeveloperForm = ({
   });
   const apiKey = user.account.apiKey;
   // const [apiKey, setApiKey] = useState(apiKey)
-  const [webhook, setWebhhok] = useState({
+  const [webhook, setWebhook] = useState({
     url: webhookUrl,
     secret: webhookSecret,
   });
@@ -97,6 +97,7 @@ const DeveloperForm = ({
             type="text"
             name="webhookUrl"
             required
+            defaultValue={webhook.url}
           />
         </fieldset>
         <button type="submit" className="px-4 py-2 rounded-xl bg-brand-primary text-white font-medium">

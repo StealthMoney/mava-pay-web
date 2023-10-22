@@ -1,9 +1,9 @@
 import React from "react";
 import DeveloperForm from "./form";
 import { getProfile } from "@/app/services/user";
-import { API_BASE_URL } from "@/config/process";
 import endpoints from "@/config/endpoints";
 import axiosInstance from "@/services/axios";
+import { auth } from "@/auth";
 
 const saveForm = async (formData: FormData) => {
   "use server";
@@ -27,10 +27,16 @@ const generateApiKey = async (): Promise<{
 };
 
 const Developer = async () => {
+  const session = await auth();
+  if (session && session.user.type === "INDIVIDUAL") {
+    return (
+      <p className="text-center mt-8">Access Denied For Individual Account</p>
+    )
+  }
   const user = await getProfile();
   const userData = user.data.data;
   const webhookSecret = "";
-  const webhookUrl = "";
+  const webhookUrl = userData.account.webhooks[0]?.url ?? "";
   return (
     <DeveloperForm
       user={userData}

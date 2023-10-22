@@ -14,6 +14,10 @@ const AUTH = {
 const PRICE = {
   GET_PRICE: (ticker: string) => `price?currency=${ticker}`
 }
+const TRANSACTION = {
+  GET_RECENT: () => `transactions?page=1&limit=15`
+}
+
 const WEBHOOK = {
   UPDATE_WEBHOOK: () => `webhook/register`
 }
@@ -22,7 +26,8 @@ const endpoints = {
   USER,
   AUTH,
   PRICE,
-  WEBHOOK
+  WEBHOOK,
+  TRANSACTION,
 }
 
 export default endpoints;

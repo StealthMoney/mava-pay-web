@@ -18,7 +18,9 @@ export type Account = {
   apiKey?: string;
   ownerId: string;
   webhooks: Webhook[];
-  walletDetails: Wallet[];
+  WalletDetails: Wallet[];
 }
 
-export type Webhook = any
+export type Webhook = {
+  url: string
+}
