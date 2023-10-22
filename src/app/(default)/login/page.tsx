@@ -4,34 +4,35 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { Button } from "@/components/button";
 
 const LoginForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const formAction = async (formData: FormData) => {
     try {
+      setIsLoading(true);
       setError("");
-      setLoading(true);
       const res = await signIn("credentials", {
         email: formData.get("email") as string,
         password: formData.get("password") as string,
         redirect: false,
         callbackUrl,
       });
-      setLoading(false);
       console.log({ res });
       if (!res?.error) {
         router.push(callbackUrl);
       } else {
         setError("Invalid email/username or password");
       }
+      setIsLoading(false);
     } catch (error: any) {
-      setLoading(false);
+      setIsLoading(false);
       setError(error.message);
     }
   };
@@ -80,13 +81,7 @@ const LoginForm = () => {
             placeholder="Password"
           />
         </div>
-        <input
-          type="submit"
-          name="submit"
-          disabled={loading}
-          value="Sign in"
-          className="bg-brand-primary py-3 md:py-5 font-bold text-base text-white rounded-lg tracking-wide "
-        />
+        <Button isLoading={isLoading} text="Sign In" color="#F2B246" />
         <p className="text-center text-custom-gray-400">
           Don&apos;t have an account?{" "}
           <Link href="/register">
