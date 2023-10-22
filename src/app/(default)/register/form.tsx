@@ -6,6 +6,7 @@ import { AccountType } from "../../../../types";
 import { AccountTypes } from "@/config/default";
 import { redirect } from "next/navigation";
 import { Button } from "../../../components/button";
+import { useToast } from "@chakra-ui/react";
 
 type RegisterFormProps = {
   action: (x: FormData) => Promise<{ error?: string; success?: boolean }>;
@@ -27,6 +28,7 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
 
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
+  const toast = useToast();
 
   const validateData = () => {
     if (error) {
@@ -55,8 +57,25 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
     const res = await action(formData);
     setLoading(false);
     if (res.error) {
-      setError(res.error);
+      toast({
+        position: "top",
+        title: "Sign Up",
+        description: res.error,
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+      });
+
       return;
+    } else {
+      toast({
+        position: "top",
+        title: "Sign Up",
+        description: "We've created your account for you.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     }
     redirect("/login");
   };
