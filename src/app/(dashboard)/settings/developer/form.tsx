@@ -40,7 +40,7 @@ const DeveloperForm = ({
     // }
     setLoading((prev) => ({ ...prev, webhook: true }));
     const res = await saveForm(formData);
-    console.log({res})
+    console.log({ res });
     setLoading((prev) => ({ ...prev, webhook: false }));
     if (res.error) {
       setError((prev) => ({
@@ -55,7 +55,11 @@ const DeveloperForm = ({
       <fieldset className="flex flex-col gap-4 items-start w-full">
         <label htmlFor="">API Key</label>
         <div className="flex gap-4 w-full">
-          <input value={apiKey} disabled className="w-full md:w-[300px] lg:w-[500px] border border-gray-300 rounded-lg px-5 py-5 text-[14px] text-black" />
+          <input
+            value={apiKey}
+            disabled
+            className="w-full md:w-[300px] lg:w-[500px] border border-gray-300 rounded-lg px-5 py-5 text-[14px] text-black"
+          />
           <button>
             <Image src="/icons/copy.svg" width={24} height={24} alt="copy" />
           </button>
@@ -100,7 +104,10 @@ const DeveloperForm = ({
             defaultValue={webhook.url}
           />
         </fieldset>
-        <button type="submit" className="px-4 py-2 rounded-xl bg-brand-primary text-white font-medium">
+        <button
+          type="submit"
+          className="px-4 py-2 rounded-xl bg-brand-primary text-white font-medium"
+        >
           save
         </button>
       </form>

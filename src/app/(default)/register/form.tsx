@@ -20,7 +20,7 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
   const [phone, setPhone] = useState("");
   const [businessName, setBusinessName] = useState("");
   const [accountType, setAccountType] = useState<AccountType>(
-    AccountTypes.INDIVIDUAL
+    AccountTypes.INDIVIDUAL,
   );
 
   const passwordRef = useRef<HTMLInputElement>(null);

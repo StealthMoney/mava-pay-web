@@ -11,10 +11,10 @@ const saveForm = async (formData: FormData) => {
   const secret = formData.get("webhookSecret");
   const res = await axiosInstance.post(endpoints.WEBHOOK.UPDATE_WEBHOOK(), {
     url,
-    secret
+    secret,
   });
   if (res.status === 200) {
-    return { success: true }
+    return { success: true };
   }
   return { error: res.data.data.message };
 };
@@ -30,8 +30,10 @@ const Developer = async () => {
   const session = await auth();
   if (session && session.user.type === "INDIVIDUAL") {
     return (
-      <p className="text-center text-2xl text-red-400 font-semibold mt-8 mx-auto">Access Denied For Individual Account</p>
-    )
+      <p className="text-center text-2xl text-red-400 font-semibold mt-8 mx-auto">
+        Access Denied For Individual Account
+      </p>
+    );
   }
   const user = await getProfile();
   const userData = user.data.data;

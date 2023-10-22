@@ -22,7 +22,7 @@ const TabSwitcher = () => {
   const pathList = usePathname()?.split("/");
   const activePath = pathList[pathList.length - 1];
   const activeTabIndex = tabLinks.findIndex((tab) => tab.path === activePath);
-  
+
   return (
     <div>
       <Tabs size="md" variant="unstyled" index={activeTabIndex}>
@@ -33,10 +33,7 @@ const TabSwitcher = () => {
               className="group data-[active]:text-brand-primary text-custom-gray-400"
               key={path}
             >
-              <Link
-                className=""
-                href={path}
-              >
+              <Link className="" href={path}>
                 <div>{name}</div>
               </Link>
             </Tab>

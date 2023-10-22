@@ -14,11 +14,11 @@ import { useState } from "react";
 const LogOut = () => {
   const [loggingOut, setLoggingOut] = useState(false);
   const handleLogout = () => {
-    setLoggingOut(true)
+    setLoggingOut(true);
     setTimeout(() => {
-      signOut()
+      signOut();
     }, 1000);
-  }
+  };
   return (
     <>
       <div
@@ -26,10 +26,16 @@ const LogOut = () => {
         // data-active-route={isActive || null}
         className="flex group data-[active-route]:text-brand-primary items-center gap-4 font-medium text-custom-gray-400 p-4 w-full rounded-xl hover:bg-brand-primary-transparent hover:text-custom-gray-800 cursor-pointer"
       >
-        <ExitIcon width={24} height={24}/>
+        <ExitIcon width={24} height={24} />
         <div>Logout</div>
       </div>
-      <Modal closeOnOverlayClick={false} closeOnEsc={false} isCentered={true} isOpen={loggingOut} onClose={() => setLoggingOut(false)}>
+      <Modal
+        closeOnOverlayClick={false}
+        closeOnEsc={false}
+        isCentered={true}
+        isOpen={loggingOut}
+        onClose={() => setLoggingOut(false)}
+      >
         <ModalOverlay />
         <ModalContent>
           <div className="flex flex-col gap-4 w-full my-10 items-center justify-center">
@@ -39,7 +45,9 @@ const LogOut = () => {
               color="blue.500"
               size="xl"
             />
-            <p className="text-xl font-medium text-custom-gray-800">Logging you out!</p>
+            <p className="text-xl font-medium text-custom-gray-800">
+              Logging you out!
+            </p>
           </div>
         </ModalContent>
       </Modal>

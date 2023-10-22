@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -6,13 +6,14 @@ import { SideNavProps } from "./sideNav";
 import { Session, User } from "next-auth";
 
 type DashboardHeaderProps = {
-  navList: SideNavProps[]
-  session: Session
+  navList: SideNavProps[];
+  session: Session;
 };
 
-const DashboardHeader = ({navList, session}: DashboardHeaderProps) => {
-  const pathname = usePathname()
-  const navHeading = navList.find(nav => nav.link === pathname)?.name ?? "Dashboard"
+const DashboardHeader = ({ navList, session }: DashboardHeaderProps) => {
+  const pathname = usePathname();
+  const navHeading =
+    navList.find((nav) => nav.link === pathname)?.name ?? "Dashboard";
 
   const name = session.user.name as string;
   const initials = name
@@ -21,7 +22,7 @@ const DashboardHeader = ({navList, session}: DashboardHeaderProps) => {
     .map((name) => name.trim().charAt(0))
     .join("");
 
-  const [firstName, lastName] = name.split(" ")
+  const [firstName, lastName] = name.split(" ");
   return (
     <nav className="flex justify-between items-center">
       <p className="text-xl font-medium text-custom-gray-800">{navHeading}</p>

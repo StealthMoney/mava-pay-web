@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Security = () => {
-  return (
-    <div>Security</div>
-  )
-}
+  return <div>Security</div>;
+};
 
-export default Security
+export default Security;

@@ -1,4 +1,3 @@
-
 import {
   Box,
   Button,
@@ -22,7 +21,7 @@ import type { TableDataElement, TableStructure } from "@/types/table";
 // eslint-disable-next-line no-unused-vars
 const defaultUndefined = <TData, TCb extends (data: TData) => any>(
   cb: TCb,
-  data: TData
+  data: TData,
 ) => {
   try {
     return cb(data);
@@ -59,14 +58,12 @@ export const ShortText = <T extends object>({
   return <Td>{typeof text === "string" ? <Text>{text}</Text> : text}</Td>;
 };
 
-
 export const TableAction = <T extends object>({
   tableItem,
   row,
   actionState,
   showControls,
 }: TableDataElement<T> & { showControls: boolean }) => {
-
   const handleClick = () => {
     if (!tableItem.action) return;
     tableItem.action(row);
@@ -130,7 +127,7 @@ export const LoadingSkeleton = ({ rowsLength }: { rowsLength: number }) => {
               <Skeleton w="100%" h={4} />
             </Td>
           ))}
-        </Tr>
+        </Tr>,
       );
     }
     return skeletonArr;
