@@ -1,10 +1,11 @@
 import Image from "next/image";
-import {} from "@radix-ui/react-icons";
+import { ExitIcon } from "@radix-ui/react-icons";
 import { auth } from "@/auth";
 import SideNav from "@/components/sideNav";
 import DashboardHeader from "@/components/dashboardHeader";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import LogOut from "@/components/LogOut";
 
 const sideNavList = [
   {
@@ -12,11 +13,11 @@ const sideNavList = [
     name: "Dashboard",
     icon: "/icons/humbleicons.svg",
   },
-  {
-    link: "/notification",
-    name: "Notification",
-    icon: "/icons/notif.svg",
-  },
+  // {
+  //   link: "/notification",
+  //   name: "Notification",
+  //   icon: "/icons/notif.svg",
+  // },
   {
     link: "/transactions",
     name: "Transactions",
@@ -26,6 +27,12 @@ const sideNavList = [
     link: "/settings",
     name: "Settings",
     icon: "/icons/setting.svg",
+  },
+  {
+    link: "/login",
+    name: "Logout",
+    icon: "",
+    component: <LogOut />
   },
 ];
 
@@ -57,14 +64,14 @@ export default async function DashboardLayout({
         </div>
 
         <div className="flex flex-col gap-4 mt-[120px]">
-          {sideNavList.map(({link, name, icon}) => <SideNav key={name} link={link} name={name} icon={icon} />)}
+          {sideNavList.map(({link, name, icon, component}) => <SideNav key={name} link={link} name={name} icon={icon} component={component} />)}
         </div>
       </div>
-      <div className="main w-full h-full flex flex-col">
+      <div className="main h-full grow flex flex-col">
         <section className="w-full py-4 px-6">
           <DashboardHeader session={session} navList={sideNavList} />
         </section>
-        <main className="bg-custom-gray-200 p-6 h-full overflow-scroll">
+        <main className="bg-custom-gray-200 p-6 grow overflow-scroll">
           {children}
         </main>
       </div>

@@ -53,7 +53,6 @@ export const authOptions: NextAuthOptions = {
     ],
     pages: {
         signIn: "/login",
-        signOut: "/logout"
     },
     session: {
         // maxAge: 60 * 15 // 15 minutes
