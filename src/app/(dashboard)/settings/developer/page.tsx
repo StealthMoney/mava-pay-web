@@ -9,14 +9,18 @@ const saveForm = async (formData: FormData) => {
   "use server";
   const url = formData.get("webhookUrl");
   const secret = formData.get("webhookSecret");
-  const res = await axiosInstance.post(endpoints.WEBHOOK.UPDATE_WEBHOOK(), {
-    url,
-    secret,
-  });
-  if (res.status === 200) {
-    return { success: true };
+  try {
+    const res = await axiosInstance.post(endpoints.WEBHOOK.UPDATE_WEBHOOK(), {
+      url,
+      secret,
+    });
+    if (res.status === 200) {
+      return { success: true };
+    }
+    return { error: res.data.data.message };
+  } catch (err) {
+    return { error: err };
   }
-  return { error: res.data.data.message };
 };
 const generateApiKey = async (): Promise<{
   error?: string;
