@@ -5,6 +5,8 @@ import React, { useRef, useState } from "react";
 import { AccountType } from "../../../../types";
 import { AccountTypes } from "@/config/default";
 import { redirect } from "next/navigation";
+import { Button } from "../../../components/button";
+import { useToast } from "@chakra-ui/react";
 
 type RegisterFormProps = {
   action: (x: FormData) => Promise<{ error?: string; success?: boolean }>;
@@ -22,9 +24,11 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
   const [accountType, setAccountType] = useState<AccountType>(
     AccountTypes.INDIVIDUAL,
   );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const passwordRef = useRef<HTMLInputElement>(null);
   const confirmPasswordRef = useRef<HTMLInputElement>(null);
+  const toast = useToast();
 
   const validateData = () => {
     if (error) {
@@ -49,12 +53,29 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
     if (isValid === false) {
       return;
     }
-    setLoading(true);
+    setIsLoading(true);
     const res = await action(formData);
     setLoading(false);
     if (res.error) {
-      setError(res.error);
+      toast({
+        position: "top",
+        title: "Sign Up",
+        description: res.error,
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+      });
+
       return;
+    } else {
+      toast({
+        position: "top",
+        title: "Sign Up",
+        description: "We've created your account for you.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     }
     redirect("/login");
   };
@@ -192,12 +213,7 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
           />
         </div>
 
-        <input
-          type="submit"
-          name="submit"
-          value="Create Account"
-          className="bg-brand-primary py-3 md:py-5 font-bold text-base text-white rounded-lg tracking-wide "
-        />
+        <Button isLoading={isLoading} text="Create Account" color="#F2B246" />
         <p className="text-center text-custom-gray-400">
           Already have an account?{" "}
           <Link href="/login">

@@ -4,46 +4,60 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { Button } from "@/components/button";
+import { useToast } from "@chakra-ui/react";
 
 const LoginForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const toast = useToast();
 
   const formAction = async (formData: FormData) => {
     try {
-      setError("");
-      setLoading(true);
+      setIsLoading(true);
       const res = await signIn("credentials", {
         email: formData.get("email") as string,
         password: formData.get("password") as string,
         redirect: false,
         callbackUrl,
       });
-      setLoading(false);
-      console.log({ res });
+
       if (!res?.error) {
+        toast({
+          position: "top",
+          title: "Login Account",
+          description: "Logged In Successfully",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
         router.push(callbackUrl);
       } else {
-        setError("Invalid email/username or password");
+        toast({
+          position: "top",
+          title: "Login Account",
+          description: "Invalid email/username or password",
+          status: "error",
+          duration: 6000,
+          isClosable: true,
+        });
       }
+      setIsLoading(false);
     } catch (error: any) {
-      setLoading(false);
-      setError(error.message);
+      setIsLoading(false);
+      toast({
+        position: "top",
+        title: "Login Account",
+        description: error.message,
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+      });
     }
   };
-
-  React.useEffect(() => {
-    if (error === "") {
-      return;
-    }
-    setTimeout(() => {
-      setError("");
-    }, 3000);
-  }, [error]);
 
   return (
     <div className="flex justify-center w-full py-[10px] md:py-[30px]">
@@ -54,15 +68,6 @@ const LoginForm = () => {
         <p className="text-center text-xl md:text-3xl font-bold text-custom-gray-800">
           Welcome Back
         </p>
-        {error ? (
-          <div
-            className={`bg-none ${
-              error ? "bg-red-100" : ""
-            } rounded-lg px-5 py-4 mb-5 flex items-center justify-center text-[14px] text-red-700 font-semibold opacity-[0.8]`}
-          >
-            <p>{error}</p>
-          </div>
-        ) : null}
 
         <div className="w-full flex flex-col gap-4 md:gap-7">
           <input
@@ -80,13 +85,7 @@ const LoginForm = () => {
             placeholder="Password"
           />
         </div>
-        <input
-          type="submit"
-          name="submit"
-          disabled={loading}
-          value="Sign in"
-          className="bg-brand-primary py-3 md:py-5 font-bold text-base text-white rounded-lg tracking-wide "
-        />
+        <Button isLoading={isLoading} text="Sign In" color="#F2B246" />
         <p className="text-center text-custom-gray-400">
           Don&apos;t have an account?{" "}
           <Link href="/register">
