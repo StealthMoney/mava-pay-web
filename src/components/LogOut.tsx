@@ -24,7 +24,7 @@ const LogOut = () => {
       <div
         onClick={handleLogout}
         // data-active-route={isActive || null}
-        className="flex group data-[active-route]:text-brand-primary items-center gap-4 font-medium text-custom-gray-400 p-4 w-full rounded-sm hover:bg-brand-primary-transparent"
+        className="flex group data-[active-route]:text-brand-primary items-center gap-4 font-medium text-custom-gray-400 p-4 w-full rounded-xl hover:bg-brand-primary-transparent hover:text-custom-gray-800 cursor-pointer"
       >
         <ExitIcon width={24} height={24}/>
         <div>Logout</div>

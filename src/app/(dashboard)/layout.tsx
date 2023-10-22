@@ -67,11 +67,11 @@ export default async function DashboardLayout({
           {sideNavList.map(({link, name, icon, component}) => <SideNav key={name} link={link} name={name} icon={icon} component={component} />)}
         </div>
       </div>
-      <div className="main w-full h-full flex flex-col">
+      <div className="main h-full grow flex flex-col">
         <section className="w-full py-4 px-6">
           <DashboardHeader session={session} navList={sideNavList} />
         </section>
-        <main className="bg-custom-gray-200 p-6 h-full overflow-scroll">
+        <main className="bg-custom-gray-200 p-6 grow overflow-scroll">
           {children}
         </main>
       </div>

@@ -21,7 +21,7 @@ const SideNav = ({ link, name, icon, component }: SideNavProps) => {
         <Link href={link}>
           <div
             data-active-route={isActive || null}
-            className="flex group data-[active-route]:text-brand-primary items-center gap-4 font-medium text-custom-gray-400 p-4 w-full "
+            className="flex group data-[active-route]:text-brand-primary items-center gap-4 font-medium text-custom-gray-400 p-4 w-full rounded-xl hover:bg-brand-primary-transparent hover:text-custom-gray-800 cursor-pointer"
           >
             {typeof icon === "string" ? (
               <Image
@@ -29,7 +29,7 @@ const SideNav = ({ link, name, icon, component }: SideNavProps) => {
                 alt={name}
                 width={24}
                 height={24}
-                className=""
+                className="text-brand-primary fill-brand-primary stroke-brand-primary"
               />
             ) : (
               icon

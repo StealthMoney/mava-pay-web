@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         "brand": {
           "primary": "#F2B246",
+          "primary-transparent": "#F2B24633",
           "secondary": "#FFDF6C",
         },
         "custom": {
