@@ -30,7 +30,7 @@ const Developer = async () => {
   const session = await auth();
   if (session && session.user.type === "INDIVIDUAL") {
     return (
-      <p className="text-center mt-8">Access Denied For Individual Account</p>
+      <p className="text-center text-2xl text-red-400 font-semibold mt-8 mx-auto">Access Denied For Individual Account</p>
     )
   }
   const user = await getProfile();

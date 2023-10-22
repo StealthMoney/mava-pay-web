@@ -14,7 +14,7 @@ import Link from "next/link";
 
 const tabLinks = [
   { name: "Account Settings", path: "account" },
-  { name: "Security", path: "security" },
+  // { name: "Security", path: "security" },
   { name: "Developer", path: "developer" },
 ];
 
