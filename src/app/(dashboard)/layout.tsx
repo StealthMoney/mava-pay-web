@@ -32,7 +32,7 @@ const sideNavList = [
     link: "/login",
     name: "Logout",
     icon: "",
-    component: <LogOut />
+    component: <LogOut />,
   },
 ];
 
@@ -44,7 +44,7 @@ export default async function DashboardLayout({
   const session = await auth();
 
   if (!session?.user?.name) {
-    redirect("/login")
+    redirect("/login");
   }
 
   const name = session?.user.name;
@@ -64,7 +64,15 @@ export default async function DashboardLayout({
         </div>
 
         <div className="flex flex-col gap-4 mt-[120px]">
-          {sideNavList.map(({link, name, icon, component}) => <SideNav key={name} link={link} name={name} icon={icon} component={component} />)}
+          {sideNavList.map(({ link, name, icon, component }) => (
+            <SideNav
+              key={name}
+              link={link}
+              name={name}
+              icon={icon}
+              component={component}
+            />
+          ))}
         </div>
       </div>
       <div className="main h-full grow flex flex-col">

@@ -26,7 +26,7 @@ const TransactionTable = ({ data }: TransactionTableProps<any>) => {
 
   function shortInvoice(invoice: string) {
     return `${invoice.substring(0, 4)}***${invoice.substring(
-      invoice.length - 5
+      invoice.length - 5,
     )}`;
   }
 
@@ -58,7 +58,7 @@ const TransactionTable = ({ data }: TransactionTableProps<any>) => {
               <Td>{formatDate(txn.transactionMetadata.order.quote.expiry)}</Td>
               <Td>
                 {shortInvoice(
-                  txn.transactionMetadata.order.quote.paymentBtcDetail
+                  txn.transactionMetadata.order.quote.paymentBtcDetail,
                 )}
               </Td>
               <Td>

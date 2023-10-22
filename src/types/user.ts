@@ -9,7 +9,7 @@ export type Profile = {
   email: string;
   phone: string;
   account: Account;
-}
+};
 
 export type Account = {
   id: string;
@@ -19,8 +19,8 @@ export type Account = {
   ownerId: string;
   webhooks: Webhook[];
   WalletDetails: Wallet[];
-}
+};
 
 export type Webhook = {
-  url: string
-}
+  url: string;
+};

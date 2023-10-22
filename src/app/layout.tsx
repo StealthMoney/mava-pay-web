@@ -18,9 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full ">
       <Providers>
-          <body className={`${inter.className} h-full`}>
-            <div className="h-full">{children}</div>
-          </body>
+        <body className={`${inter.className} h-full`}>
+          <div className="h-full">{children}</div>
+        </body>
       </Providers>
     </html>
   );

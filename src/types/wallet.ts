@@ -3,13 +3,13 @@ export type Wallet = {
   currency: WalletCurrencyType;
   balance: number;
   transactions: any[];
-}
+};
 
 export const WalletCurrency = {
   Ngn: "NGN",
   Usd: "USD",
-  Btc: "BTC"
-} as const
+  Btc: "BTC",
+} as const;
 
-export type WalletCurrencyType = (typeof WalletCurrency)[keyof typeof WalletCurrency]
-
+export type WalletCurrencyType =
+  (typeof WalletCurrency)[keyof typeof WalletCurrency];

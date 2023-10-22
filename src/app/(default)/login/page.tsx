@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 
-
 const LoginForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -25,7 +24,7 @@ const LoginForm = () => {
         callbackUrl,
       });
       setLoading(false);
-      console.log({res})
+      console.log({ res });
       if (!res?.error) {
         router.push(callbackUrl);
       } else {
