@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import SideNav from "@/components/sideNav";
 import DashboardHeader from "@/components/dashboardHeader";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 const sideNavList = [
   {
@@ -50,7 +51,9 @@ export default async function DashboardLayout({
     <div className="flex h-full">
       <div className="sidebar w-[264px] px-4">
         <div className="mt-8 ml-8">
-          <Image alt="mavapay" src="/mavapay.svg" width={100} height={100} />
+          <Link href="/">
+            <Image alt="mavapay" src="/mavapay.svg" width={100} height={100} />
+          </Link>
         </div>
 
         <div className="flex flex-col gap-4 mt-[120px]">
