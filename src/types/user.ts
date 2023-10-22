@@ -8,6 +8,7 @@ export type Profile = {
   businessname?: string;
   email: string;
   phone: string;
+  kycInfo: KycInfo;
   account: Account;
 };
 
@@ -24,3 +25,13 @@ export type Account = {
 export type Webhook = {
   url: string;
 };
+
+export type KycInfo = {
+  address: string;
+  phone: string;
+  businessName: string;
+  nationality: string;
+  status: KycInfoStatus;
+};
+
+export type KycInfoStatus = "PENDING" | "ACTIVE" | "INACTIVE";

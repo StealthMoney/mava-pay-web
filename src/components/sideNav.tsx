@@ -12,7 +12,8 @@ export type SideNavProps = {
 
 const SideNav = ({ link, name, icon, component }: SideNavProps) => {
   const pathname = usePathname();
-  const isActive = pathname === link;
+  const initRoute = "/" + pathname.split("/")[1];
+  const isActive = initRoute === link;
   return (
     <>
       {component ? (

@@ -2,6 +2,7 @@ import { API_BASE_URL } from "./process";
 
 const USER = {
   GET_USER: () => `user`,
+  UPDATE_USER: () => `user`,
 };
 
 const AUTH = {
