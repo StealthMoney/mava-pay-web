@@ -45,7 +45,7 @@ const DeveloperForm = ({
     if (res.error) {
       setError((prev) => ({
         ...prev,
-        webhook: res.error ?? "An error occured",
+        webhook: res.error ?? "An error occurred",
       }));
       return;
     }
