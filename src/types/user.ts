@@ -24,6 +24,7 @@ export type Account = {
 
 export type Webhook = {
   url: string;
+  secret: string;
 };
 
 export type KycInfo = {

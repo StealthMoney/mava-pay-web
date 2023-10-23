@@ -4,6 +4,7 @@ import { getProfile } from "@/app/services/user";
 import endpoints from "@/config/endpoints";
 import axiosInstance from "@/services/axios";
 import { auth } from "@/auth";
+import { revalidatePath } from "next/cache";
 
 const saveForm = async (formData: FormData) => {
   "use server";
@@ -14,12 +15,13 @@ const saveForm = async (formData: FormData) => {
       url,
       secret,
     });
-    if (res.status === 200) {
+    
+    if (res.data.status === "ok") {
       return { success: true };
     }
     return { error: res.data.data.message };
-  } catch (err) {
-    return { error: err };
+  } catch (err: any) {
+    return { error: err?.message ? err?.message : "something went wrong" };
   }
 };
 const generateApiKey = async (): Promise<{
@@ -27,7 +29,17 @@ const generateApiKey = async (): Promise<{
   success?: boolean;
 }> => {
   "use server";
-  return { success: false };
+  try {
+    const res = await axiosInstance.get(endpoints.USER.GEN_APIKEY())
+    if (res.data.status === "ok") {
+      revalidatePath("/settings/developer", "page");
+      return { success: true }
+    } else {
+      return { error: "unable to generate new api key"}
+    }
+  } catch (err: any) {
+    return { error: err?.message ? err.message : "unable to generate new api key"}
+  }
 };
 
 const Developer = async () => {
@@ -41,8 +53,7 @@ const Developer = async () => {
   }
   const user = await getProfile();
   const userData = user.data.data;
-  const webhookSecret = "";
-  const webhookUrl = userData.account.webhooks[0]?.url ?? "";
+  const { url: webhookUrl, secret: webhookSecret } = userData.account.webhooks[0];
   return (
     <DeveloperForm
       user={userData}
