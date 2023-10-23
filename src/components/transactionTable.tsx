@@ -17,6 +17,7 @@ type TransactionTableProps<T> = {
 
 const TransactionTable = ({ data }: TransactionTableProps<any>) => {
   function formatDate(inputDate: string) {
+    if (!inputDate) return "-"
     const date = new Date(inputDate);
 
     const options: any = { year: "numeric", month: "long", day: "numeric" };
@@ -38,29 +39,24 @@ const TransactionTable = ({ data }: TransactionTableProps<any>) => {
       <Table>
         <Thead>
           <Tr>
-            <Th>Order ID</Th>
+            <Th>ID</Th>
             <Th>Amount</Th>
-            <Th>Rate</Th>
+            <Th>Fee</Th>
+            <Th>Currency</Th>
+            <Th>Type</Th>
             <Th>Date</Th>
-            <Th>Invoice</Th>
             <Th>Status</Th>
           </Tr>
         </Thead>
         <Tbody>
           {data?.map((txn, index) => (
             <Tr key={index}>
-              <Td>{txn.transactionMetadata.order.id}</Td>
+              <Td>{shortInvoice(txn.id)}</Td>
               <Td>₦{koboToNaira(txn.amount).toLocaleString()}</Td>
-              <Td>
-                ₦
-                {txn.transactionMetadata.order.quote.exchangeRate.toLocaleString()}
-              </Td>
-              <Td>{formatDate(txn.transactionMetadata.order.quote.expiry)}</Td>
-              <Td>
-                {shortInvoice(
-                  txn.transactionMetadata.order.quote.paymentBtcDetail,
-                )}
-              </Td>
+              <Td>₦{koboToNaira(txn.fees).toLocaleString()}</Td>
+              <Td>{txn.currency}</Td>
+              <Td>{txn.type}</Td>
+              <Td>{formatDate(txn.createdAt)}</Td>
               <Td>
                 <TnxStatus status={txn.status} />
               </Td>

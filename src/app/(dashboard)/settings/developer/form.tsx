@@ -88,7 +88,7 @@ const DeveloperForm = ({
     };
     try {
       if (!apiKey) {
-        errorToast("No API key on this accout");
+        errorToast("No API key on this account");
         return;
       }
       await navigator.clipboard.writeText(apiKey);
