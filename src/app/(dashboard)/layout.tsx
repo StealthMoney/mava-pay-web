@@ -13,11 +13,11 @@ const sideNavList = [
     name: "Dashboard",
     icon: "/icons/humbleicons.svg",
   },
-  // {
-  //   link: "/notification",
-  //   name: "Notification",
-  //   icon: "/icons/notif.svg",
-  // },
+  {
+    link: "/wallets",
+    name: "Wallets",
+    icon: "/icons/wallet-grey.svg",
+  },
   {
     link: "/transactions",
     name: "Transactions",

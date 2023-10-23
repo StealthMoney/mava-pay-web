@@ -24,12 +24,17 @@ const WEBHOOK = {
   UPDATE_WEBHOOK: () => `webhook/register`,
 };
 
+const WALLET = {
+  GETWALLET: () => "wallet",
+};
+
 const endpoints = {
   USER,
   AUTH,
   PRICE,
   WEBHOOK,
   TRANSACTION,
+  WALLET,
 };
 
 export default endpoints;

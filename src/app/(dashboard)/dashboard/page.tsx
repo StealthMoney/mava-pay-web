@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
+import { nairaUnitConversion } from "@/util";
 
 const DashboardPage = async () => {
   const user = await getProfile();
@@ -32,8 +33,10 @@ export default DashboardPage;
 const CardsSection = ({ wallets }: { wallets: Wallet[] }) => {
   const btcWallet =
     wallets.find((data) => data.currency === "BTC")?.balance ?? 0;
-  const ngnWallet =
-    wallets.find((data) => data.currency === "NGN")?.balance ?? 0;
+  const ngnWallet = nairaUnitConversion(
+    wallets.find((data) => data.currency === "NGN")?.balance ?? 0,
+    "naira",
+  );
   const numberFormat = (number: number, symbol: string) =>
     `${new Intl.NumberFormat("en-NG").format(number)} ${symbol}`;
   return (
