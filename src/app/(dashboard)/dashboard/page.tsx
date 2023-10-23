@@ -35,7 +35,7 @@ const CardsSection = ({ wallets }: { wallets: Wallet[] }) => {
     wallets.find((data) => data.currency === "BTC")?.balance ?? 0;
   const ngnWallet = nairaUnitConversion(
     wallets.find((data) => data.currency === "NGN")?.balance ?? 0,
-    "naira"
+    "naira",
   );
   const numberFormat = (number: number, symbol: string) =>
     `${new Intl.NumberFormat("en-NG").format(number)} ${symbol}`;
