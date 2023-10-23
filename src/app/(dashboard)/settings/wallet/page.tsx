@@ -31,6 +31,33 @@ const submitBank = async ({
   }
 };
 
+const withraw = async ({
+  amount,
+  accountNumber,
+  walletId,
+}: {
+  amount: string;
+  accountNumber: string;
+  walletId: string;
+}) => {
+  "use server";
+  const data = {
+    amount,
+    bankAccountNumber: accountNumber,
+    currency: "NGN",
+    walletId,
+  };
+
+  console.log(data);
+
+  try {
+    await axiosInstance.post("withdraw", data);
+    return { success: true };
+  } catch (error: any) {
+    return { success: false, message: error.response.data.message };
+  }
+};
+
 const Wallet = async () => {
   const fetchWallet = async () => {
     try {
@@ -43,7 +70,11 @@ const Wallet = async () => {
   const walletId = await fetchWallet();
   return (
     <>
-      <WalletForms submitBank={submitBank} walletId={walletId} />
+      <WalletForms
+        submitBank={submitBank}
+        walletId={walletId}
+        withdraw={withraw}
+      />
     </>
   );
 };
