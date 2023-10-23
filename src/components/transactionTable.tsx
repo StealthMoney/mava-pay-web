@@ -17,7 +17,7 @@ type TransactionTableProps<T> = {
 
 const TransactionTable = ({ data }: TransactionTableProps<any>) => {
   function formatDate(inputDate: string) {
-    if (!inputDate) return "-"
+    if (!inputDate) return "-";
     const date = new Date(inputDate);
 
     const options: any = { year: "numeric", month: "long", day: "numeric" };
