@@ -49,7 +49,7 @@ interface WalletProps {
     amount: string;
   }) => Promise<{ success: boolean; data?: any; message?: string }>;
   getOrder: (
-    quoteId: string
+    quoteId: string,
   ) => Promise<{ success: boolean; data?: any; message?: string }>;
   getOrderById: (orderId: string) => Promise<{
     success: boolean;
