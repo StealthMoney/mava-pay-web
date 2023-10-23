@@ -42,7 +42,7 @@ const withraw = async ({
 }) => {
   "use server";
   const data = {
-    amount,
+    amount: Number(amount) * 100,
     bankAccountNumber: accountNumber,
     currency: "NGN",
     walletId,
