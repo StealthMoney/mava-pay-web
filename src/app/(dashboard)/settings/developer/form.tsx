@@ -24,17 +24,10 @@ const DeveloperForm = ({
     apiKey: false,
     webhook: false,
   });
-  const [error, setError] = useState({
-    apiKey: "",
-    webhook: "",
-  });
   const apiKey = user.account.apiKey;
 
   const formAction = async (formData: FormData) => {
-    console.log("I got here");
-    // setLoading((prev) => ({ ...prev, webhook: true }));
     const res = await saveForm(formData);
-    console.log({ res });
 
     if (res.success) {
       toast({
