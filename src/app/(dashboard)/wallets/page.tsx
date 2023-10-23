@@ -72,7 +72,7 @@ const getQuote = async ({ amount }: { amount: string }) => {
     const res = await axiosInstance.post("quote", data);
     return { success: true, data: res.data.data };
   } catch (error: any) {
-    console.log(error.resposne);
+    console.log(error.response);
     return { success: false, message: error?.response?.data?.message };
   }
 };
@@ -103,7 +103,7 @@ const CardsSection = ({ wallets }: { wallets: Wallet[] }) => {
     wallets.find((data) => data.currency === "BTC")?.balance ?? 0;
   const ngnWallet = nairaUnitConversion(
     wallets.find((data) => data.currency === "NGN")?.balance ?? 0,
-    "naira",
+    "naira"
   );
   const usdWallet =
     wallets.find((data) => data.currency === "USD")?.balance ?? 0;

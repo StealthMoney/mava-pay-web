@@ -49,7 +49,7 @@ interface WalletProps {
     amount: string;
   }) => Promise<{ success: boolean; data?: any; message?: string }>;
   getOrder: (
-    quoteId: string,
+    quoteId: string
   ) => Promise<{ success: boolean; data?: any; message?: string }>;
   getOrderById: (orderId: string) => Promise<{
     success: boolean;
@@ -357,7 +357,7 @@ const WalletForms = ({
                 />
               </FormControl>
               <FormControl mt={4}>
-                <FormLabel>Curreny</FormLabel>
+                <FormLabel>Currency</FormLabel>
                 <Input placeholder="Currency" value={"NGN"} readOnly />
               </FormControl>
             </ModalBody>
@@ -402,7 +402,7 @@ const WalletForms = ({
               </FormControl>
 
               <FormControl mt={4}>
-                <FormLabel>Curreny</FormLabel>
+                <FormLabel>Currency</FormLabel>
                 <Input placeholder="Currency" value={"NGN"} readOnly />
               </FormControl>
             </ModalBody>
