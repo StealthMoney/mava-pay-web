@@ -31,11 +31,11 @@ const DeveloperForm = ({
   const apiKey = user.account.apiKey;
 
   const formAction = async (formData: FormData) => {
-    console.log("I got here")
+    console.log("I got here");
     // setLoading((prev) => ({ ...prev, webhook: true }));
     const res = await saveForm(formData);
     console.log({ res });
-    
+
     if (res.success) {
       toast({
         position: "top",

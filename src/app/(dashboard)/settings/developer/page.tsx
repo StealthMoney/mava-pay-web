@@ -15,7 +15,7 @@ const saveForm = async (formData: FormData) => {
       url,
       secret,
     });
-    
+
     if (res.data.status === "ok") {
       return { success: true };
     }
@@ -30,15 +30,17 @@ const generateApiKey = async (): Promise<{
 }> => {
   "use server";
   try {
-    const res = await axiosInstance.get(endpoints.USER.GEN_APIKEY())
+    const res = await axiosInstance.get(endpoints.USER.GEN_APIKEY());
     if (res.data.status === "ok") {
       revalidatePath("/settings/developer", "page");
-      return { success: true }
+      return { success: true };
     } else {
-      return { error: "unable to generate new api key"}
+      return { error: "unable to generate new api key" };
     }
   } catch (err: any) {
-    return { error: err?.message ? err.message : "unable to generate new api key"}
+    return {
+      error: err?.message ? err.message : "unable to generate new api key",
+    };
   }
 };
 
@@ -53,7 +55,8 @@ const Developer = async () => {
   }
   const user = await getProfile();
   const userData = user.data.data;
-  const { url: webhookUrl, secret: webhookSecret } = userData.account.webhooks[0];
+  const { url: webhookUrl, secret: webhookSecret } =
+    userData.account.webhooks[0];
   return (
     <DeveloperForm
       user={userData}

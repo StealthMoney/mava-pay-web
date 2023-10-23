@@ -3,7 +3,7 @@ import { API_BASE_URL } from "./process";
 const USER = {
   GET_USER: () => `user`,
   UPDATE_USER: () => `user`,
-  GEN_APIKEY: () => `user/apikey`
+  GEN_APIKEY: () => `user/apikey`,
 };
 
 const AUTH = {
