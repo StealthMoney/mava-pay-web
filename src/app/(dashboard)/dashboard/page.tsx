@@ -21,7 +21,8 @@ const DashboardPage = async () => {
   );
 
   const res = await getRecentTransactions();
-  const recentTxns = res.data.data ?? [];
+  const txns = res.data.data ?? [];
+  const recentTxns = txns.reverse();
 
   return (
     <div className="flex flex-col gap-6 h-full">

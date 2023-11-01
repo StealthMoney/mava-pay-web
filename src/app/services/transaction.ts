@@ -3,7 +3,9 @@ import endpoints from "@/config/endpoints";
 import axiosInstance from "@/services/axios";
 import { Transaction } from "@/types/transaction";
 
-export const getRecentTransactions = async () => {
+export const getRecentTransactions = async (): Promise<{
+  data: { status: string; data: Transaction[] };
+}> => {
   return await axiosInstance.get(endpoints.TRANSACTION.GET_RECENT());
 };
 
