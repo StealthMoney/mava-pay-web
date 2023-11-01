@@ -55,8 +55,9 @@ const Developer = async () => {
   }
   const user = await getProfile();
   const userData = user.data.data;
-  const { url: webhookUrl, secret: webhookSecret } =
-    userData.account.webhooks[0];
+  const webhook = userData.account.webhooks?.[0];
+  const webhookUrl = webhook?.url ?? "";
+  const webhookSecret = webhook?.secret ?? "";
   return (
     <DeveloperForm
       user={userData}

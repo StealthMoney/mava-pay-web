@@ -24,7 +24,7 @@ const sideNavList = [
     icon: "/icons/transaction.svg",
   },
   {
-    link: "/settings",
+    link: "/settings/account",
     name: "Settings",
     icon: "/icons/setting.svg",
   },
