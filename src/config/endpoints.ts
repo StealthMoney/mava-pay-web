@@ -18,6 +18,8 @@ const PRICE = {
 };
 const TRANSACTION = {
   GET_RECENT: () => `transactions?page=1&limit=15`,
+  GET_TRANSACTIONS: (page: number, limit: number) =>
+    `transactions?page=${page}&limit=${limit}`,
 };
 
 const WEBHOOK = {
