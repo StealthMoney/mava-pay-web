@@ -8,4 +8,9 @@ export const AccountStatus = {
   BUSINESS: "business",
 } as const;
 
+export const paymentMethod = {
+  BITCOIN: "BITCOIN",
+  LIGHTNING: "LIGHTNING",
+} as const
+
 export const DEFAULT_TRANSACTION_PER_PAGE = 15;

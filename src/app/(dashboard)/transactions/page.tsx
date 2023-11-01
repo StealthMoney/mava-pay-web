@@ -6,7 +6,8 @@ import { Box, Input, Text } from "@chakra-ui/react";
 const TransactionPage = async () => {
   const res = await getTransactions(0);
 
-  const recentTxns = res.data.data ?? [];
+  const txs = res.data.data ?? [];
+  const recentTxns = txs.reverse()
 
   return (
     <div className="flex flex-col">
