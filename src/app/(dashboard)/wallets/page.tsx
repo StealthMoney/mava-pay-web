@@ -26,6 +26,7 @@ const submitBank = async ({
     bankAccountNumber: accountNumber,
     currency: "NGN",
     walletId,
+    bankCode: "02390",
   };
 
   try {

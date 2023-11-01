@@ -1,12 +1,13 @@
-import { getRecentTransactions } from "@/app/services/transaction";
+import { getTransactions } from "@/app/services/transaction";
 import TransactionTable from "@/components/transactionTable";
 import React from "react";
 import { Box, Input, Text } from "@chakra-ui/react";
 
 const TransactionPage = async () => {
-  const res = await getRecentTransactions();
+  const res = await getTransactions(0);
 
-  const recentTxns = res.data.data ?? [];
+  const txs = res.data.data ?? [];
+  const recentTxns = txs.reverse();
 
   return (
     <div className="flex flex-col">

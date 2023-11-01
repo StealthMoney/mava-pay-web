@@ -17,7 +17,7 @@ const LogOut = () => {
     setLoggingOut(true);
     setTimeout(() => {
       signOut();
-    }, 1000);
+    }, 300);
   };
   return (
     <>
