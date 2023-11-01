@@ -40,6 +40,6 @@ export type TransactionMetadata = {
       expiry: string;
       sourceCurrency: string;
       targetCurrency: string;
-    }
-  }
-}
+    };
+  };
+};

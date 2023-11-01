@@ -7,7 +7,7 @@ const TransactionPage = async () => {
   const res = await getTransactions(0);
 
   const txs = res.data.data ?? [];
-  const recentTxns = txs.reverse()
+  const recentTxns = txs.reverse();
 
   return (
     <div className="flex flex-col">

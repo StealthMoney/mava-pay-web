@@ -10,7 +10,7 @@ export const getRecentTransactions = async () => {
 export const getTransactions = async (
   page: number,
   limit: number = DEFAULT_TRANSACTION_PER_PAGE,
-) : Promise<{
+): Promise<{
   data: { status: string; data: Transaction[] };
 }> => {
   return await axiosInstance.get(
