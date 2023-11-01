@@ -1,13 +1,9 @@
-import {
-  WalletCurrency,
-  WalletCurrencyType,
-  precisionByExchangeUnit,
-} from "@/types/wallet";
+import { WalletCurrencyType, precisionByExchangeUnit } from "@/types/wallet";
 
 export function currencyUnitConversion(
   value: number,
   type: WalletCurrencyType,
-  unit: boolean = true,
+  unit: boolean = false,
 ) {
   if (unit) {
     return value * precisionByExchangeUnit[type];

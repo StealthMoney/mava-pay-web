@@ -43,10 +43,8 @@ const CardsSection = ({
   wallets: Wallet[];
   totalSatsExchanged: number;
 }) => {
-  const btcWallet =
-    wallets.find((data) => data.currency === "BTC")?.balance ?? 0;
   const ngnWallet = currencyUnitConversion(
-    wallets.find((data) => data.currency === "NGN")?.balance ?? 0,
+    wallets.find((data) => data.currency === WalletCurrency.Ngn)?.balance ?? 0,
     WalletCurrency.Ngn,
     false,
   );
@@ -56,13 +54,13 @@ const CardsSection = ({
       <SmallCard
         twProps="bg-orange-100"
         title="Total Amount Exchanged"
-        amount={currencyUnitFormat(totalSatsExchanged, "BTC")}
+        amount={currencyUnitFormat(totalSatsExchanged, WalletCurrency.Btc)}
         icon="/icons/wallet.svg"
       />
       <SmallCard
         twProps="bg-green-100"
         title="Current Balance"
-        amount={currencyUnitFormat(ngnWallet, "NGN")}
+        amount={currencyUnitFormat(ngnWallet, WalletCurrency.Ngn)}
         icon="/icons/wallet-green.svg"
       />
     </div>
