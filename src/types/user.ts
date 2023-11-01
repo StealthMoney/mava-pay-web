@@ -20,6 +20,7 @@ export type Account = {
   ownerId: string;
   webhooks: Webhook[];
   WalletDetails: Wallet[];
+  totalSatsExchanged: number;
 };
 
 export type Webhook = {

@@ -1,11 +1,12 @@
 import React from "react";
 import WalletForms from "./form";
-import { Wallet } from "@/types/wallet";
+import { Wallet, WalletCurrency } from "@/types/wallet";
 import Image from "next/image";
 
 import axiosInstance from "@/services/axios";
-import { nairaUnitConversion } from "@/util";
+import { currencyUnitConversion, currencyUnitFormat } from "@/util";
 import { getRecentTransactions } from "@/app/services/transaction";
+import { revalidatePath } from "next/cache";
 
 const submitBank = async ({
   bankName,
@@ -29,6 +30,7 @@ const submitBank = async ({
 
   try {
     await axiosInstance.post("bankAccount", data);
+    revalidatePath("/wallet", "page");
     return { success: true };
   } catch (error: any) {
     return { success: false, message: error.response.data.message };
@@ -54,6 +56,8 @@ const withraw = async ({
 
   try {
     await axiosInstance.post("withdraw", data);
+    revalidatePath("/wallet", "page");
+    revalidatePath("/dashboard", "page");
     return { success: true };
   } catch (error: any) {
     return { success: false, message: error.response.data.message };
@@ -101,33 +105,33 @@ const getOrderById = async (orderId: string) => {
 const CardsSection = ({ wallets }: { wallets: Wallet[] }) => {
   const btcWallet =
     wallets.find((data) => data.currency === "BTC")?.balance ?? 0;
-  const ngnWallet = nairaUnitConversion(
+  const ngnWallet = currencyUnitConversion(
     wallets.find((data) => data.currency === "NGN")?.balance ?? 0,
-    "naira",
+    WalletCurrency.Ngn,
+    false,
   );
   const usdWallet =
     wallets.find((data) => data.currency === "USD")?.balance ?? 0;
-  const numberFormat = (number: number, symbol: string) =>
-    `${new Intl.NumberFormat("en-NG").format(number)} ${symbol}`;
+
   return (
     <div className="grid grid-cols-12 gap-6 w-full mb-7">
       <SmallCard
         twProps="bg-green-100"
         title="Naira Balance"
-        amount={numberFormat(ngnWallet, "NGN")}
+        amount={currencyUnitFormat(ngnWallet, WalletCurrency.Ngn)}
         icon="/icons/wallet-green.svg"
       />
       <SmallCard
         twProps="bg-orange-100"
         title="BTC Balance"
-        amount={numberFormat(btcWallet, "BTC")}
+        amount={currencyUnitFormat(btcWallet, WalletCurrency.Btc)}
         icon="/icons/wallet.svg"
       />
 
       <SmallCard
         twProps="bg-green-100"
         title="USD Balance"
-        amount={numberFormat(usdWallet, "USD")}
+        amount={currencyUnitFormat(usdWallet, WalletCurrency.Usd)}
         icon="/icons/wallet-green.svg"
       />
     </div>
