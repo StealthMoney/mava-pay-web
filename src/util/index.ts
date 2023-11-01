@@ -1,7 +1,27 @@
-export function nairaUnitConversion(value: number, type: "naira" | "kobo") {
-  if (type === "kobo") {
-    return value * 100;
+import {
+  WalletCurrency,
+  WalletCurrencyType,
+  precisionByExchangeUnit,
+} from "@/types/wallet";
+
+export function currencyUnitConversion(
+  value: number,
+  type: WalletCurrencyType,
+  unit: boolean = true,
+) {
+  if (unit) {
+    return value * precisionByExchangeUnit[type];
   } else {
-    return value / 100;
+    return value / precisionByExchangeUnit[type];
   }
 }
+
+export const currencyUnitFormat = (
+  number: number,
+  currency: WalletCurrencyType,
+) => {
+  return `${new Intl.NumberFormat("en-NG", {
+    minimumFractionDigits:
+      precisionByExchangeUnit[currency].toString().length - 1,
+  }).format(number)} ${currency}`;
+};

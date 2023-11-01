@@ -1,12 +1,12 @@
 import { getRecentTransactions } from "@/app/services/transaction";
 import { getProfile } from "@/app/services/user";
 import TransactionTable from "@/components/transactionTable";
-import { Wallet } from "@/types/wallet";
+import { Wallet, WalletCurrency } from "@/types/wallet";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
-import { nairaUnitConversion } from "@/util";
+import { currencyUnitConversion, currencyUnitFormat } from "@/util";
 
 const DashboardPage = async () => {
   const user = await getProfile();
@@ -14,13 +14,19 @@ const DashboardPage = async () => {
     redirect("/login");
   }
   const wallets = user.data.data.account.WalletDetails;
+  const totalSatsExchanged = currencyUnitConversion(
+    user.data.data.account.totalSatsExchanged ?? 0,
+    WalletCurrency.Btc,
+    false,
+  );
+  console.log(totalSatsExchanged);
 
   const res = await getRecentTransactions();
   const recentTxns = res.data.data ?? [];
 
   return (
     <div className="flex flex-col gap-6 h-full">
-      <CardsSection wallets={wallets} />
+      <CardsSection wallets={wallets} totalSatsExchanged={totalSatsExchanged} />
       <TableSection>
         <TransactionTable data={recentTxns} />
       </TableSection>
@@ -30,27 +36,33 @@ const DashboardPage = async () => {
 
 export default DashboardPage;
 
-const CardsSection = ({ wallets }: { wallets: Wallet[] }) => {
+const CardsSection = ({
+  wallets,
+  totalSatsExchanged,
+}: {
+  wallets: Wallet[];
+  totalSatsExchanged: number;
+}) => {
   const btcWallet =
     wallets.find((data) => data.currency === "BTC")?.balance ?? 0;
-  const ngnWallet = nairaUnitConversion(
+  const ngnWallet = currencyUnitConversion(
     wallets.find((data) => data.currency === "NGN")?.balance ?? 0,
-    "naira",
+    WalletCurrency.Ngn,
+    false,
   );
-  const numberFormat = (number: number, symbol: string) =>
-    `${new Intl.NumberFormat("en-NG").format(number)} ${symbol}`;
+
   return (
     <div className="grid grid-cols-12 gap-6 w-full">
       <SmallCard
         twProps="bg-orange-100"
         title="Total Amount Exchanged"
-        amount={numberFormat(btcWallet, "BTC")}
+        amount={currencyUnitFormat(totalSatsExchanged, "BTC")}
         icon="/icons/wallet.svg"
       />
       <SmallCard
         twProps="bg-green-100"
-        title="Total Amount Received"
-        amount={numberFormat(ngnWallet, "NGN")}
+        title="Current Balance"
+        amount={currencyUnitFormat(ngnWallet, "NGN")}
         icon="/icons/wallet-green.svg"
       />
     </div>
