@@ -19,7 +19,6 @@ const DashboardPage = async () => {
     WalletCurrency.Btc,
     false,
   );
-  console.log(totalSatsExchanged);
 
   const res = await getRecentTransactions();
   const recentTxns = res.data.data ?? [];

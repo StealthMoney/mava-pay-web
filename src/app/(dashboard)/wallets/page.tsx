@@ -6,6 +6,7 @@ import Image from "next/image";
 import axiosInstance from "@/services/axios";
 import { currencyUnitConversion, currencyUnitFormat } from "@/util";
 import { getRecentTransactions } from "@/app/services/transaction";
+import { revalidatePath } from "next/cache";
 
 const submitBank = async ({
   bankName,
@@ -29,6 +30,7 @@ const submitBank = async ({
 
   try {
     await axiosInstance.post("bankAccount", data);
+    revalidatePath("/wallet", "page");
     return { success: true };
   } catch (error: any) {
     return { success: false, message: error.response.data.message };
@@ -54,6 +56,8 @@ const withraw = async ({
 
   try {
     await axiosInstance.post("withdraw", data);
+    revalidatePath("/wallet", "page");
+    revalidatePath("/dashboard", "page");
     return { success: true };
   } catch (error: any) {
     return { success: false, message: error.response.data.message };
