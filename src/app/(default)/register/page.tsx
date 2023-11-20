@@ -3,6 +3,12 @@ import axiosInstance from "@/services/axios";
 import React from "react";
 import RegisterForm from "./form";
 import { AccountTypes } from "@/config/default";
+import { AxiosError, AxiosResponse } from "axios";
+
+type RegisterAuthResponse = {
+  status: string;
+  message: string;
+};
 
 const registerUser = async (formData: FormData) => {
   "use server";
@@ -25,13 +31,21 @@ const registerUser = async (formData: FormData) => {
     url = AUTH.REGISTER_BUSINESS();
     body["businessName"] = businessName;
   }
-  const res = await axiosInstance.post(url, body);
 
-  if (res.data.status !== "ok") {
-    const message = res.data.message;
-    return { error: message };
-  }
-  return { success: true };
+  const result = await axiosInstance
+    .post<RegisterAuthResponse>(url, body)
+    .then((res) => {
+      if (res.data.status === "ok") {
+        return { success: true };
+      }
+      const message = res.data.message;
+      return { error: message };
+    })
+    .catch((err: AxiosError<RegisterAuthResponse>) => {
+      return { error: err.response?.data.message ?? "Something went wrong" };
+    });
+
+  return result;
 };
 
 const RegisterPage = async () => {

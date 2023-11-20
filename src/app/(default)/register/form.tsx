@@ -13,14 +13,8 @@ type RegisterFormProps = {
 };
 
 const RegisterForm = ({ action }: RegisterFormProps) => {
-  // const [password, setPassword] = React.useState("");
-  // const [confirmPassword, setConfirmPassword] = React.useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(false);
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [phone, setPhone] = useState("");
-  const [businessName, setBusinessName] = useState("");
   const [accountType, setAccountType] = useState<AccountType>(
     AccountTypes.INDIVIDUAL,
   );
@@ -46,7 +40,7 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
     return true;
   };
 
-  const isButtonDisabled = loading || error !== "" || !passwordsMatch;
+  const isButtonDisabled = isLoading || error !== "" || !passwordsMatch;
 
   const formAction = async (formData: FormData) => {
     const isValid = validateData();
@@ -55,7 +49,7 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
     }
     setIsLoading(true);
     const res = await action(formData);
-    setLoading(false);
+    setIsLoading(false);
     if (res.error) {
       toast({
         position: "top",
@@ -71,9 +65,9 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
       toast({
         position: "top",
         title: "Sign Up",
-        description: "We've created your account for you.",
+        description: "We've created your account for you. Please check your email to activate your account",
         status: "success",
-        duration: 3000,
+        duration: 6000,
         isClosable: true,
       });
     }
