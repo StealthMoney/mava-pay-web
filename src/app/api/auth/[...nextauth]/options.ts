@@ -1,5 +1,5 @@
 import jwt_decode from "jwt-decode";
-import { NextAuthOptions, Session } from "next-auth";
+import { NextAuthOptions, Session, User } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -34,20 +34,18 @@ export const authOptions: NextAuthOptions = {
 
         const res = await fetch(API_BASE_URL + authEndpoint, {
           method: "POST",
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          }),
+          body: JSON.stringify(body),
           headers: { "Content-Type": "application/json" },
         });
 
         const data = await res.json();
-        const user = data.data;
-        if (res.ok && user) {
-          return user;
-        } else {
-          return null;
+        console.log(data)
+        const user = {
+          token: data.data?.token || null,
+          error: data.status === "error",
+          message: data.message,
         }
+        return user as User
       },
     }),
   ],
@@ -60,10 +58,10 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async signIn({ user }) {
-      if (user && user?.token) {
+      if (!user.error) {
         return true;
       } else {
-        return false;
+        throw new Error(user.message ?? "Something went wrong");
       }
     },
 
