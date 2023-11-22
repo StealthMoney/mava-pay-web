@@ -19,7 +19,9 @@ declare module "next-auth" {
    * or the second parameter of the `session` callback, when using a database.
    */
   interface User {
-    token: string;
+    token: string | null;
+    error: boolean;
+    message: string;
   }
 }
 

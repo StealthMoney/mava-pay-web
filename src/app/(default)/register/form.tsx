@@ -9,18 +9,12 @@ import { Button } from "../../../components/button";
 import { useToast } from "@chakra-ui/react";
 
 type RegisterFormProps = {
-  action: (x: FormData) => Promise<{ error?: string; success?: boolean }>;
+  action: (x: FormData) => Promise<{ success: boolean; message: string }>;
 };
 
 const RegisterForm = ({ action }: RegisterFormProps) => {
-  // const [password, setPassword] = React.useState("");
-  // const [confirmPassword, setConfirmPassword] = React.useState("");
   const [passwordsMatch, setPasswordsMatch] = useState(false);
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [phone, setPhone] = useState("");
-  const [businessName, setBusinessName] = useState("");
   const [accountType, setAccountType] = useState<AccountType>(
     AccountTypes.INDIVIDUAL,
   );
@@ -46,7 +40,7 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
     return true;
   };
 
-  const isButtonDisabled = loading || error !== "" || !passwordsMatch;
+  const isButtonDisabled = isLoading || error !== "" || !passwordsMatch;
 
   const formAction = async (formData: FormData) => {
     const isValid = validateData();
@@ -55,12 +49,12 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
     }
     setIsLoading(true);
     const res = await action(formData);
-    setLoading(false);
-    if (res.error) {
+    setIsLoading(false);
+    if (!res.success) {
       toast({
         position: "top",
         title: "Sign Up",
-        description: res.error,
+        description: res.message,
         status: "error",
         duration: 6000,
         isClosable: true,
@@ -71,9 +65,10 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
       toast({
         position: "top",
         title: "Sign Up",
-        description: "We've created your account for you.",
+        description:
+          "We've created your account for you. Please check your email to activate your account",
         status: "success",
-        duration: 3000,
+        duration: 6000,
         isClosable: true,
       });
     }

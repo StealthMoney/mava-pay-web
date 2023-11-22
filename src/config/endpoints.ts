@@ -11,6 +11,7 @@ const AUTH = {
   REGISTER_INDIVIDUAL: () => `auth/signup/individual`,
   REGISTER_BUSINESS: () => `auth/signup/business`,
   LOGOUT: () => `logout`,
+  VERIFY: (token: string) => `verify/email?token=${token}`,
 };
 
 const PRICE = {

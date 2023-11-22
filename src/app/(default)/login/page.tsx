@@ -39,7 +39,7 @@ const LoginForm = () => {
         toast({
           position: "top",
           title: "Login Account",
-          description: "Invalid email/username or password",
+          description: res.error,
           status: "error",
           duration: 6000,
           isClosable: true,
@@ -47,6 +47,7 @@ const LoginForm = () => {
       }
       setIsLoading(false);
     } catch (error: any) {
+      console.log({ error });
       setIsLoading(false);
       toast({
         position: "top",

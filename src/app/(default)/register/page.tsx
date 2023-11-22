@@ -3,6 +3,13 @@ import axiosInstance from "@/services/axios";
 import React from "react";
 import RegisterForm from "./form";
 import { AccountTypes } from "@/config/default";
+import { AxiosError, AxiosResponse } from "axios";
+import { API_BASE_URL } from "@/config/process";
+
+type RegisterAuthResponse = {
+  status: string;
+  message: string;
+};
 
 const registerUser = async (formData: FormData) => {
   "use server";
@@ -25,13 +32,22 @@ const registerUser = async (formData: FormData) => {
     url = AUTH.REGISTER_BUSINESS();
     body["businessName"] = businessName;
   }
-  const res = await axiosInstance.post(url, body);
 
-  if (res.data.status !== "ok") {
-    const message = res.data.message;
-    return { error: message };
+  const result = await fetch(API_BASE_URL + url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  if (!result.ok) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    };
   }
-  return { success: true };
+  const data = (await result.json()) as RegisterAuthResponse;
+
+  return { success: data.status === "ok", message: data.message };
 };
 
 const RegisterPage = async () => {
