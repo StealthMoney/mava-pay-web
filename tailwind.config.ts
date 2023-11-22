@@ -28,8 +28,8 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       boxShadow: {
-        'full': '0px 0px 40px 0px rgba(0, 0, 0, 0.1)',
-      }
+        full: "0px 0px 40px 0px rgba(0, 0, 0, 0.1)",
+      },
     },
   },
   plugins: [],

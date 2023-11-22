@@ -4,7 +4,6 @@ import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import endpoints from "@/config/endpoints";
-import axiosInstance from "@/services/axios";
 import { API_BASE_URL } from "@/config/process";
 import { DecodedJwt } from "@/types/jwt";
 // import { DecodedJwt } from "@/types/jwt"
@@ -39,13 +38,12 @@ export const authOptions: NextAuthOptions = {
         });
 
         const data = await res.json();
-        console.log(data)
         const user = {
           token: data.data?.token || null,
           error: data.status === "error",
           message: data.message,
-        }
-        return user as User
+        };
+        return user as User;
       },
     }),
   ],

@@ -36,16 +36,16 @@ const registerUser = async (formData: FormData) => {
   const result = await fetch(API_BASE_URL + url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
   });
 
   if (!result.ok) {
     return {
       success: false,
       message: "Something went wrong",
-    }
+    };
   }
-  const data = await result.json() as RegisterAuthResponse
+  const data = (await result.json()) as RegisterAuthResponse;
 
   return { success: data.status === "ok", message: data.message };
 };

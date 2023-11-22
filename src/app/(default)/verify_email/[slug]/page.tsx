@@ -30,16 +30,20 @@ const VerifyToken = async ({ params }: { params: { slug: string } }) => {
       <div className="rounded-xl shadow-full px-4 py-8 grid place-items-center mt-[15vh] text-gray-700 text-2xl font-medium">
         <h1 className="text-5xl md:text-6xl mt-8 font-bold">Authorization</h1>
         <div className="w-[90%] max-w-2xl h-[4px] bg-purple-100 mt-6 mb-10"></div>
-      {isVerifying ? (
-        <p className="">Please wait while we activate your account</p>
-      ) : isVerified ? (
-        <div className="">
-          <p>Verified Successfully</p> 
-          <Link href="/login"><p className="mt-4 font-normal text-lg text-purple-500 text-center">Click here to login</p></Link>
-        </div>
-      ) : (
-        <p className="">Verification Failed</p>
-      )}
+        {isVerifying ? (
+          <p className="">Please wait while we activate your account</p>
+        ) : isVerified ? (
+          <div className="">
+            <p>Verified Successfully</p>
+            <Link href="/login">
+              <p className="mt-4 font-normal text-lg text-purple-500 text-center">
+                Click here to login
+              </p>
+            </Link>
+          </div>
+        ) : (
+          <p className="">Verification Failed</p>
+        )}
       </div>
     </div>
   );

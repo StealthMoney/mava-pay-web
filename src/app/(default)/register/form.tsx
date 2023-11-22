@@ -9,7 +9,7 @@ import { Button } from "../../../components/button";
 import { useToast } from "@chakra-ui/react";
 
 type RegisterFormProps = {
-  action: (x: FormData) => Promise<{ success: boolean, message: string }>;
+  action: (x: FormData) => Promise<{ success: boolean; message: string }>;
 };
 
 const RegisterForm = ({ action }: RegisterFormProps) => {
@@ -65,7 +65,8 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
       toast({
         position: "top",
         title: "Sign Up",
-        description: "We've created your account for you. Please check your email to activate your account",
+        description:
+          "We've created your account for you. Please check your email to activate your account",
         status: "success",
         duration: 6000,
         isClosable: true,

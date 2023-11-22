@@ -23,7 +23,7 @@ const LoginForm = () => {
         password: formData.get("password") as string,
         redirect: false,
         callbackUrl,
-      }); 
+      });
 
       if (!res?.error) {
         toast({
@@ -47,7 +47,7 @@ const LoginForm = () => {
       }
       setIsLoading(false);
     } catch (error: any) {
-      console.log({error})
+      console.log({ error });
       setIsLoading(false);
       toast({
         position: "top",
