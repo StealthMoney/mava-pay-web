@@ -9,7 +9,7 @@ import { Button } from "../../../components/button";
 import { useToast } from "@chakra-ui/react";
 
 type RegisterFormProps = {
-  action: (x: FormData) => Promise<{ error?: string; success?: boolean }>;
+  action: (x: FormData) => Promise<{ success: boolean, message: string }>;
 };
 
 const RegisterForm = ({ action }: RegisterFormProps) => {
@@ -50,11 +50,11 @@ const RegisterForm = ({ action }: RegisterFormProps) => {
     setIsLoading(true);
     const res = await action(formData);
     setIsLoading(false);
-    if (res.error) {
+    if (!res.success) {
       toast({
         position: "top",
         title: "Sign Up",
-        description: res.error,
+        description: res.message,
         status: "error",
         duration: 6000,
         isClosable: true,

@@ -4,6 +4,7 @@ import React from "react";
 import RegisterForm from "./form";
 import { AccountTypes } from "@/config/default";
 import { AxiosError, AxiosResponse } from "axios";
+import { API_BASE_URL } from "@/config/process";
 
 type RegisterAuthResponse = {
   status: string;
@@ -32,20 +33,21 @@ const registerUser = async (formData: FormData) => {
     body["businessName"] = businessName;
   }
 
-  const result = await axiosInstance
-    .post<RegisterAuthResponse>(url, body)
-    .then((res) => {
-      if (res.data.status === "ok") {
-        return { success: true };
-      }
-      const message = res.data.message;
-      return { error: message };
-    })
-    .catch((err: AxiosError<RegisterAuthResponse>) => {
-      return { error: err.response?.data.message ?? "Something went wrong" };
-    });
+  const result = await fetch(API_BASE_URL + url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
 
-  return result;
+  if (!result.ok) {
+    return {
+      success: false,
+      message: "Something went wrong",
+    }
+  }
+  const data = await result.json() as RegisterAuthResponse
+
+  return { success: data.status === "ok", message: data.message };
 };
 
 const RegisterPage = async () => {
