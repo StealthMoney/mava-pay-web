@@ -1,5 +1,6 @@
 import endpoints from "@/config/endpoints";
 import { API_BASE_URL } from "@/config/process";
+import Link from "next/link";
 import React from "react";
 
 const VerifyToken = async ({ params }: { params: { slug: string } }) => {
@@ -25,14 +26,19 @@ const VerifyToken = async ({ params }: { params: { slug: string } }) => {
   isVerifying = false;
 
   return (
-    <div className="text text-gray-800 h-full p-4 md:p-12">
-      <div className="grid place-items-center mt=10">
+    <div className="p-4 md:p-12">
+      <div className="rounded-xl shadow-full px-4 py-8 grid place-items-center mt-[15vh] text-gray-700 text-2xl font-medium">
+        <h1 className="text-5xl md:text-6xl mt-8 font-bold">Authorization</h1>
+        <div className="w-[90%] max-w-2xl h-[4px] bg-purple-100 mt-6 mb-10"></div>
       {isVerifying ? (
-        <p className="text-3xl font-bold">Please wait while we activate your account</p>
+        <p className="">Please wait while we activate your account</p>
       ) : isVerified ? (
-        <p className="text-3xl font-bold">Verified</p>
+        <div className="">
+          <p>Verified Successfully</p> 
+          <Link href="/login"><p className="mt-4 font-normal text-lg text-purple-500 text-center">Click here to login</p></Link>
+        </div>
       ) : (
-        <p className="text-3xl font-bold">Verification Failed</p>
+        <p className="">Verification Failed</p>
       )}
       </div>
     </div>
